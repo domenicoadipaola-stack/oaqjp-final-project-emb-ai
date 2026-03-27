@@ -15,23 +15,39 @@ def emotion_detector(text_to_analyse):
         # Process the response as needed
         # Extract emotion scores
         emotions = res['emotionPredictions'][0]['emotion']
-
-        # Find the dominant emotion (highest score)
-        dominant_emotion = max(emotions, key=emotions.get)
-        
-        # Add dominant_emotion to the result
-        result = {
-            'anger': emotions['anger'],
-            'disgust': emotions['disgust'],
-            'fear': emotions['fear'],
-            'joy': emotions['joy'],
-            'sadness': emotions['sadness'],
-            'dominant_emotion': dominant_emotion
+    
+    elif response.status_code == 400:
+        # Handle blank entries - return dictionary with None values
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
         }
-        
-        return result
-
     else:
-        # Handle errors (e.g., print status code and error message)
-        print(f"Error: {response.status_code}, {response.text}")
-        return None
+        # Handle other errors
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+
+    # Find the dominant emotion (highest score)
+    dominant_emotion = max(emotions, key=emotions.get)
+    
+    # Add dominant_emotion to the result
+    result = {
+        'anger': emotions['anger'],
+        'disgust': emotions['disgust'],
+        'fear': emotions['fear'],
+        'joy': emotions['joy'],
+        'sadness': emotions['sadness'],
+        'dominant_emotion': dominant_emotion
+    }
+    
+    return result
