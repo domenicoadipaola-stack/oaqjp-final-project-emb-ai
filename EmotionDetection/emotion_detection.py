@@ -1,6 +1,6 @@
 import requests
 import json
-
+    
 def emotion_detector(text_to_analyse):
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
     headers = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
@@ -30,7 +30,7 @@ def emotion_detector(text_to_analyse):
         }
         
         return result
-        
+
     else:
         # Handle errors (e.g., print status code and error message)
         print(f"Error: {response.status_code}, {response.text}")
